@@ -1,8 +1,11 @@
 package com.akka.game.root;
 
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
+import com.akka.game.config.extension.SpringExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import scala.Option;
@@ -12,9 +15,26 @@ import scala.Option;
 public class GameRootActor extends AbstractActor{
     private final LoggingAdapter LOG = Logging.getLogger(getContext().getSystem(), this);
 
+    @Autowired
+    protected SpringExtension extension;
+
+    private ActorRef contentsActor;
+
+    private ActorRef manageActor;
+
+    private ActorRef serverConnectActor;
+
+    private ActorRef chatActor;
+
     @Override
     public void preStart() throws Exception {
         super.preStart();
+
+        contentsActor = getContext().actorOf(extension.props("contentsActor"), "contentsActor");
+        manageActor = getContext().actorOf(extension.props("manageActor"), "manageActor");
+        serverConnectActor = getContext().actorOf(extension.props("serverConnectActor"), "serverConnectActor");
+        chatActor = getContext().actorOf(extension.props("chatActor"), "ChatActor");
+
     }
 
     @Override
