@@ -30,7 +30,3 @@ dependencies {
 ## Authors
 
 * **Creaton 60(Reactor)**
-
-## License
-
-Copyright (c) 2018 "reactor" dongkyu lee Licensed under the MIT license.
